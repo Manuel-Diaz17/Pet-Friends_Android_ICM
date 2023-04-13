@@ -44,11 +44,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.nav_item_one ){
-            val intent: Intent = Intent(this,LoginActivity::class.java)
+            val intent: Intent = Intent(this,StartupActivity::class.java)
             startActivity(intent)
         }
         if (item.itemId == R.id.nav_item_two){
             val intent: Intent = Intent(this,PetSittersList::class.java)
+            startActivity(intent)
+        }
+        if (item.itemId == R.id.nav_item_four){
+            val intent: Intent = Intent(this,ProfileActivity::class.java)
             startActivity(intent)
         }
 
