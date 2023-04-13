@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PetSittersActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/pet_sitter_img"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="85dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/pet_sitter_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="90dp"
+        android:text="Name"
+        android:textColor="@color/teal_700"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/img_pet_sitter_profile"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pet_sitter_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:text="Age"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/pet_sitter_img"
+        app:layout_constraintTop_toBottomOf="@+id/pet_sitter_name" />
+
+    <TextView
+        android:id="@+id/pet_sitter_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:text="Address"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/pet_sitter_img"
+        app:layout_constraintTop_toBottomOf="@+id/pet_sitter_age" />
+
+    <TextView
+        android:id="@+id/pet_sitter_pets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="14dp"
+        android:text="Pets"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/pet_sitter_img"
+        app:layout_constraintTop_toBottomOf="@+id/pet_sitter_address" />
+
+    <TextView
+        android:id="@+id/pet_sitter_reviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="10dp"
+        android:text="Reviews:"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pet_sitter_rating" />
+
+    <RatingBar
+        android:id="@+id/pet_sitter_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="26dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:theme="@style/RatingBar"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+        app:layout_constraintStart_toEndOf="@+id/img_pet_sitter_rating"
+        app:layout_constraintTop_toBottomOf="@+id/pet_sitter_img" />
+
+    <ImageView
+        android:id="@+id/img_pet_sitter_profile"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="85dp"
+        app:layout_constraintStart_toEndOf="@+id/pet_sitter_img"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/person" />
+
+    <ImageView
+        android:id="@+id/img_pet_sitter_age"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toEndOf="@+id/pet_sitter_img"
+        app:layout_constraintTop_toBottomOf="@+id/img_pet_sitter_profile"
+        app:srcCompat="@drawable/numbers" />
+
+    <ImageView
+        android:id="@+id/img_pet_sitter_pets"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toEndOf="@+id/pet_sitter_img"
+        app:layout_constraintTop_toBottomOf="@+id/img_pet_sitter_address"
+        app:srcCompat="@drawable/pets" />
+
+    <ImageView
+        android:id="@+id/img_pet_sitter_address"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toEndOf="@+id/pet_sitter_img"
+        app:layout_constraintTop_toBottomOf="@+id/img_pet_sitter_age"
+        app:srcCompat="@drawable/world" />
+
+    <ImageView
+        android:id="@+id/img_pet_sitter_rating"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pet_sitter_img"
+        app:srcCompat="@drawable/thumb_up" />
+
+    <TextView
+        android:id="@+id/txt_review_01"
+        android:layout_width="264dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="70dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/img_review_cat"
+        app:layout_constraintTop_toBottomOf="@+id/pet_sitter_rating" />
+
+    <TextView
+        android:id="@+id/txt_review_02"
+        android:layout_width="264dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="34dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/img_review_dog"
+        app:layout_constraintTop_toBottomOf="@+id/txt_review_01" />
+
+    <TextView
+        android:id="@+id/txt_review_03"
+        android:layout_width="264dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="34dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/img_review_bird"
+        app:layout_constraintTop_toBottomOf="@+id/txt_review_02" />
+
+    <ImageView
+        android:id="@+id/img_review_cat"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="29dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pet_sitter_reviews"
+        app:srcCompat="@drawable/cat_01" />
+
+    <ImageView
+        android:id="@+id/img_review_dog"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_review_cat"
+        app:srcCompat="@drawable/dog_01" />
+
+    <ImageView
+        android:id="@+id/img_review_bird"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_review_dog"
+        app:srcCompat="@drawable/birds_01" />
+
+    <Button
+        android:id="@+id/btn_schedule"
+        android:layout_width="180dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="5dp"
+        android:text="Schedule"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_review_03" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

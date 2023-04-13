@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main">
+
+
+    <TextView
+        android:id="@+id/txt_title_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="91dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="91dp"
+        android:text=" Our sitters care for every type of pet"
+        android:textColor="@color/teal_700"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title_4" />
+
+    <TextView
+        android:id="@+id/txt_title_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="117dp"
+        android:text="How pet sitters can help you"
+        android:textColor="@color/teal_700"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgv_three2" />
+
+    <TextView
+        android:id="@+id/txt_title_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="16dp"
+        android:text="Travel in comfort"
+        android:textColor="@color/teal_700"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgv_three" />
+
+    <TextView
+        android:id="@+id/txt_title_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="16dp"
+        android:text="Safe and happy pets"
+        android:textColor="@color/teal_700"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/txt_title_4"
+        app:layout_constraintTop_toBottomOf="@+id/imgv_cat_02" />
+
+    <TextView
+        android:id="@+id/txt_title_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="26dp"
+        android:text="A win - win for everyone"
+        android:textColor="@color/teal_700"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_title_5"
+        app:layout_constraintTop_toBottomOf="@+id/imgv_heart" />
+
+    <TextView
+        android:id="@+id/txt_title_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="81dp"
+        android:layout_marginEnd="78dp"
+        android:text="PET SITTERS OFFERING PEACE OF MIND"
+        android:textColor="@color/teal_700"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgv_three"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title_"
+        app:srcCompat="@drawable/threes_01" />
+
+    <ImageView
+        android:id="@+id/imgv_three2"
+        android:layout_width="323dp"
+        android:layout_height="154dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title_2"
+        app:srcCompat="@drawable/img03" />
+
+    <ImageView
+        android:id="@+id/imgv_cat_02"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toEndOf="@+id/imgv_three"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title_"
+        app:srcCompat="@drawable/cat_02" />
+
+    <ImageView
+        android:id="@+id/imgv_heart"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="41dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgv_cat_02"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title_"
+        app:srcCompat="@drawable/heart_01" />
+
+    <ImageView
+        android:id="@+id/imgv_reptile"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="78dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgv_birds"
+        app:layout_constraintStart_toEndOf="@+id/imgv_cat"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title_3"
+        app:srcCompat="@drawable/reptiles_01" />
+
+    <ImageView
+        android:id="@+id/imgv_cat"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="78dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgv_reptile"
+        app:layout_constraintStart_toEndOf="@+id/imgv_dog"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title_3"
+        app:srcCompat="@drawable/cat_01" />
+
+    <ImageView
+        android:id="@+id/imgv_dog"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="78dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgv_cat"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title_3"
+        app:srcCompat="@drawable/dog_01" />
+
+    <ImageView
+        android:id="@+id/imgv_birds"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="78dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgv_reptile"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title_3"
+        app:srcCompat="@drawable/birds_01" />
+</androidx.constraintlayout.widget.ConstraintLayout>
