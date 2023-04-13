@@ -3,6 +3,7 @@ package com.example.mytestapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.util.PatternsCompat
@@ -33,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
         btnLogin.setOnClickListener {
             validate()
+
         }
     }
     private fun validate(){
@@ -45,7 +47,11 @@ class LoginActivity : AppCompatActivity() {
         if(handler.selectDB(txf_login_email.editText?.text.toString(),txf_login_password.editText?.text.toString())){
             Toast.makeText(this,"User Login Success",Toast.LENGTH_SHORT).show()
             val intent : Intent = Intent(this, MainActivity::class.java)
+            val loginCredentials = handler.selectLoginCredentials(txf_login_email.editText?.text.toString(),txf_login_password.editText?.text.toString())
+            intent.putExtra("loginCredentials", loginCredentials)
             startActivity(intent)
+            Log.d("login", loginCredentials.toString())
+
         }else{
             Toast.makeText(this,"Email/Password is wrong",Toast.LENGTH_SHORT).show()
         }

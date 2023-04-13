@@ -4,22 +4,27 @@ import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_pet_sitters_list.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawer: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
+
+    private lateinit var userCredentials: UserCredentials
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val loginCredentials = intent.getSerializableExtra("loginCredentials") as UserCredentials
+        Log.d("login", loginCredentials.toString())
+        userCredentials = loginCredentials
 
 
 
@@ -53,6 +58,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         if (item.itemId == R.id.nav_item_four){
             val intent: Intent = Intent(this,ProfileActivity::class.java)
+            Log.d("login", userCredentials.toString())
+            intent.putExtra("userCredentials", userCredentials)
             startActivity(intent)
         }
 

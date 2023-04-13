@@ -1,5 +1,6 @@
 package com.example.mytestapp
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -51,5 +52,32 @@ class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version
         }
         cursor.close()
         return true
+    }
+
+    fun selectLoginCredentials(email: String, password: String): UserCredentials {
+        val db: SQLiteDatabase = writableDatabase
+        val query = "SELECT email, password FROM users where email ='${email}' and password = '${password}'"
+        return UserCredentials(email, password)
+    }
+
+    @SuppressLint("Range")
+    fun selectUserData(email: String, password: String): User {
+        val db: SQLiteDatabase = writableDatabase
+        val query = "SELECT email, name, lastname, address, phone FROM users where email ='${email}' and password = '${password}'"
+        val user1 = User("", "","","","")
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            val email = cursor.getString(cursor.getColumnIndex("email"))
+            val name = cursor.getString(cursor.getColumnIndex("name"))
+            val lastname = cursor.getString(cursor.getColumnIndex("lastname"))
+            val address = cursor.getString(cursor.getColumnIndex("address"))
+            val phone = cursor.getString(cursor.getColumnIndex("phone"))
+            val user1 = User(email, name, lastname, address, phone)
+        }
+        cursor.close()
+
+        return user1
+
     }
 }
