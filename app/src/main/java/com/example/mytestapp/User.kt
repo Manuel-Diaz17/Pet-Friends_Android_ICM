@@ -7,4 +7,7 @@ class User(
     val address:String,
     val phone:String
 ): java.io.Serializable {
+    override fun toString(): String {
+        return "${email}, ${name}, ${lastname}, ${address}, ${phone}"
+    }
 }

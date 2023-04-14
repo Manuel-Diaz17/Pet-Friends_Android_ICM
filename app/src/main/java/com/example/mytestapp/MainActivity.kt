@@ -8,27 +8,22 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawer: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private lateinit var userCredentials: UserCredentials
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val loginCredentials = intent.getSerializableExtra("loginCredentials") as UserCredentials
-        Log.d("login", loginCredentials.toString())
-        userCredentials = loginCredentials
-
-
-
-        MyToolBar().show(this,"Welcome to Pet Sitters",false,true)
+        MyToolBar().show(this,"Welcome to Pet Friends",false,true)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar_main)
 
@@ -37,15 +32,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.addDrawerListener(toggle)
 
-
+        //nav_header_textView.text = userCredentials.email
 
         val navigationView: NavigationView = findViewById(R.id.nav_view)
 
         navigationView.setNavigationItemSelectedListener(this)
 
-
-
     }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.nav_item_one ){
@@ -58,8 +52,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         if (item.itemId == R.id.nav_item_four){
             val intent: Intent = Intent(this,ProfileActivity::class.java)
-            Log.d("login", userCredentials.toString())
-            intent.putExtra("userCredentials", userCredentials)
             startActivity(intent)
         }
 

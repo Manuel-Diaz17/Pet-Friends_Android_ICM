@@ -15,8 +15,8 @@
     
     <ImageView
         android:id="@+id/nav_header_imageView"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:src="@drawable/logo_petfriends"/>
     <TextView
         android:id="@+id/nav_header_textView"
