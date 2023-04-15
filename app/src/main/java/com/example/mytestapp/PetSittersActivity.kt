@@ -31,5 +31,7 @@ class PetSittersActivity : AppCompatActivity() {
         txt_review_02.text = '"' + petSitter.review_2 + '"'
         txt_review_03.text = '"' + petSitter.review_3 + '"'
 
+
+
     }
 }

@@ -3,7 +3,9 @@ package com.example.mytestapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.motion.widget.TransitionBuilder.validate
 import kotlinx.android.synthetic.main.activity_pet_sitters_list.*
 
 class PetSittersList : AppCompatActivity() {
@@ -34,6 +36,12 @@ class PetSittersList : AppCompatActivity() {
         my_list.setOnItemClickListener{ parent, view, position, id ->
             val intent = Intent(this,PetSittersActivity::class.java)
             intent.putExtra("petSitter",listPetSitters[position])
+            startActivity(intent)
+        }
+
+        val locationButton: Button = findViewById(R.id.locations_button)
+        locationButton.setOnClickListener {
+            val intent = Intent(this,MapActivity::class.java)
             startActivity(intent)
         }
     }
