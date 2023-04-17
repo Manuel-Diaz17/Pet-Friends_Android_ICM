@@ -7,6 +7,10 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 
 class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version) {
     companion object{
@@ -16,6 +20,7 @@ class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
+
         db?.execSQL("CREATE TABLE users(email nvarchar(50) primary key," +
                          "password nvarchar(50)," +
                          "name nvarchar(50)," +
@@ -23,10 +28,13 @@ class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version
                          "address nvarchar(50)," +
                          "phone char(10))")
 
-        Log.d("ded", "db")
 
         db?.execSQL("CREATE TABLE userLoggedIn(email nvarchar(50) primary key," +
                         "password nvarchar(50))")
+
+        db?.execSQL("CREATE TABLE pets(pet blob," +
+                        "email nvarchar(50) references users(email))")
+        Log.d("ded", "db")
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -148,4 +156,61 @@ class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version
         db.update("users", contentValues, "email = '${email}'", null)
 
     }
+
+    fun insertPetData(email: String, pet: Pet){
+        val db: SQLiteDatabase = writableDatabase
+        val values: ContentValues = ContentValues()
+
+        val serializedPet = ByteArrayOutputStream().also { stream ->
+            ObjectOutputStream(stream).use { it.writeObject(pet) }
+        }.toByteArray()
+
+        values.put("email",email)
+        values.put("pet",serializedPet)
+
+        db.insert("pets", null, values)
+        db.close()
+    }
+
+    fun deletePet(pet: Pet): Boolean {
+        val db = writableDatabase
+        if(db.delete("pets","pet ='${serializePet(pet)}'",null) == 0)
+            return false
+        return true
+
+    }
+    fun retrievePetData(email: String): List<Pet>{
+        val db: SQLiteDatabase = writableDatabase
+        val query = "SELECT pet FROM pets where email ='${email}'"
+        val petList = mutableListOf<Pet>()
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val petBlob = cursor.getBlob(0)
+                val pet = deserializePet(petBlob)
+                petList.add(pet)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return petList
+    }
+
+    private fun serializePet(pet: Pet): ByteArray {
+        val serializedPet = ByteArrayOutputStream().also { stream ->
+            ObjectOutputStream(stream).use { it.writeObject(pet) }
+        }.toByteArray()
+        return serializedPet
+    }
+
+    private fun deserializePet(serializedPet: ByteArray): Pet {
+        val inputStream = ByteArrayInputStream(serializedPet)
+        val objectInputStream = ObjectInputStream(inputStream)
+        val pet = objectInputStream.readObject() as Pet
+        objectInputStream.close()
+        inputStream.close()
+        return pet
+    }
+
+
 }

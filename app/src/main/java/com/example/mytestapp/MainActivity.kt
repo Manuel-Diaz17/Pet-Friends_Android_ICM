@@ -50,6 +50,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val intent: Intent = Intent(this,PetSittersList::class.java)
             startActivity(intent)
         }
+
+        if (item.itemId == R.id.nav_item_three){
+            val intent: Intent = Intent(this,PetListActivity::class.java)
+            startActivity(intent)
+        }
+
         if (item.itemId == R.id.nav_item_four){
             val intent: Intent = Intent(this,ProfileActivity::class.java)
             startActivity(intent)
@@ -81,3 +87,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 }
+

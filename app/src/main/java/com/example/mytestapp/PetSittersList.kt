@@ -39,11 +39,7 @@ class PetSittersList : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val locationButton: Button = findViewById(R.id.locations_button)
-        locationButton.setOnClickListener {
-            val intent = Intent(this,MapActivity::class.java)
-            startActivity(intent)
-        }
+
     }
     override fun onBackPressed() {
 

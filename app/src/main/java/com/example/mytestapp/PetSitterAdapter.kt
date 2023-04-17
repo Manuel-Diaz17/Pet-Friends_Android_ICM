@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import kotlinx.android.synthetic.main.pet_details.view.*
 import kotlinx.android.synthetic.main.pet_sitters_details.view.*
+import kotlinx.android.synthetic.main.pet_sitters_details.view.img_profile
+import kotlinx.android.synthetic.main.pet_sitters_details.view.txt_name
 
 class PetSitterAdapter(
     private val mContext: Context, private val listPetSitter:List<PetSitter>

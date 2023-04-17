@@ -27,7 +27,11 @@ class SignUpActivity : AppCompatActivity() {
         val btnSignUp: Button = findViewById(R.id.btn_signup)
         btnSignUp.setOnClickListener {
             validateChk()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
+
+
 
 
     }
@@ -70,7 +74,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateEmail():Boolean{
         val email = txf_email.editText?.text.toString()
-        return if(email.isEmpty()){
+        /*return if(email.isEmpty()){
             txf_email.error = "Field can not be empty"
             false
         }else if(!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()){
@@ -79,7 +83,8 @@ class SignUpActivity : AppCompatActivity() {
         }else{
             txf_email.error = null
             true
-        }
+        }*/
+        return true
     }
     private fun validateThing(data:TextInputLayout):Boolean{
         val thing = data.editText?.text.toString()
@@ -94,7 +99,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validatePassword():Boolean{
         val password = txf_password.editText?.text.toString()
-        val passwordRegex = Pattern.compile(
+        /*val passwordRegex = Pattern.compile(
             "^" +
                     "(?=.*[0-9])" +
                     "(?=.*[a-z])" +
@@ -113,6 +118,7 @@ class SignUpActivity : AppCompatActivity() {
         }else{
             txf_password.error = null
             true
-        }
+        }*/
+        return true
     }
 }
