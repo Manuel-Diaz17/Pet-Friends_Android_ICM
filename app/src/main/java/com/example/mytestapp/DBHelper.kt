@@ -69,6 +69,32 @@ class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version
         db.close()
     }
 
+    @SuppressLint("Range")
+    fun selectPetSitterActive(email: String): PetSitter?{
+        val db: SQLiteDatabase = writableDatabase
+        val query = "SELECT name, address, rating, image, age, typeOfPets, review1, review2, review3 FROM petSitterActive where email ='${email}'"
+        val petSitterActive: PetSitter
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            val name = cursor.getString(cursor.getColumnIndex("name"))
+            val address = cursor.getString(cursor.getColumnIndex("address"))
+            val rating = cursor.getFloat(cursor.getColumnIndex("rating"))
+            val image = cursor.getInt(cursor.getColumnIndex("image"))
+            val age = cursor.getInt(cursor.getColumnIndex("age"))
+            val typeOfPets = cursor.getString(cursor.getColumnIndex("typeOfPets"))
+            val review1 = cursor.getString(cursor.getColumnIndex("review1"))
+            val review2 = cursor.getString(cursor.getColumnIndex("review2"))
+            val review3 = cursor.getString(cursor.getColumnIndex("review3"))
+            cursor.close()
+            petSitterActive = PetSitter(name, address, rating, image, age, typeOfPets, review1, review2, review3)
+            return petSitterActive
+        } else {
+            cursor.close()
+            return null
+        }
+    }
+
     fun insertDBpetSitterActive(name:String,address:String,rating:Float,image:Int,age:Int,typeOfPets:String, review1:String, review2:String, review3:String, email: String){
         val db: SQLiteDatabase = writableDatabase
         val values: ContentValues = ContentValues()
@@ -88,14 +114,20 @@ class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version
         db.close()
     }
 
-    fun getPetSitterActiveCount(): Int {
+    fun getPetSitterActiveCount(email: String): Int {
         val db: SQLiteDatabase = writableDatabase
-        val query = "SELECT COUNT(*) FROM petSitterActive"
+        val query = "SELECT COUNT(*) FROM petSitterActive where email ='${email}'"
         val cursor = db.rawQuery(query, null)
         cursor.moveToFirst()
         val count = cursor.getInt(0)
         cursor.close()
         return count
+    }
+
+    fun deletePetSitterActiveByEmail(email: String) {
+        val db: SQLiteDatabase = writableDatabase
+        db.delete("petSitterActive", "email='${email}'", null)
+        db.close()
     }
 
     fun getUserLoggedInCount(): Int {
@@ -188,4 +220,5 @@ class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version
         db.update("users", contentValues, "email = '${email}'", null)
 
     }
+
 }
