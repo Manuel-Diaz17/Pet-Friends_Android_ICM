@@ -14,17 +14,17 @@ class PetSittersList : AppCompatActivity() {
         setContentView(R.layout.activity_pet_sitters_list)
 
         //Mostrar el toolbar
-        MyToolBar().show(this,"Sitters",true,true)
+        MyToolBar().show(this,"Sitters Available",true,true)
 
         //Mostrar los datos de los cuidadores guardados en local
 
-        val petSitter1 = PetSitter("Phillip","Agueda, Aveiro",
+        val petSitter1 = PetSitter("Phillip","Agueda",
             4.2f,R.drawable.img_user_01,27,"Dogs and Cats","The best caretaker","Highly recommended","Phillip is the best")
 
-        val petSitter2 = PetSitter("Vanessa & Ian","Mealhada, Aveiro",
+        val petSitter2 = PetSitter("Vanessa & Ian","Mealhada",
                 4.7f,R.drawable.img_user_02,22,"Birds and Raccoons","The best caregivers","Highly recommended","Vanessa e Ian are the best")
 
-        val petSitter3 = PetSitter("Rita & Phil","Aveiro, Aveiro",
+        val petSitter3 = PetSitter("Rita & Phil","Aveiro",
             5.0f,R.drawable.img_user_03,24,"Rats and Snakes","The best caregivers","Highly recommended","Rita y Phil are the best")
 
         val listPetSitters = listOf(petSitter1,petSitter2,petSitter3)

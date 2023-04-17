@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pet Sitters</string>
+    <string name="app_name">Pet Friends</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
     <string name="PetListEmpty">It´s looking empty... Add a pet?</string>

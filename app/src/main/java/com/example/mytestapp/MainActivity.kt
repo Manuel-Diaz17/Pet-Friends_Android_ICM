@@ -17,11 +17,13 @@ import kotlinx.android.synthetic.main.nav_header_main.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawer: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
-
+    lateinit var handler: DBHelper
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        handler = DBHelper(this)
 
         MyToolBar().show(this,"Welcome to Pet Friends",false,true)
 
@@ -32,7 +34,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.addDrawerListener(toggle)
 
-        //nav_header_textView.text = userCredentials.email
+        handler = DBHelper(this)
+
 
         val navigationView: NavigationView = findViewById(R.id.nav_view)
 
@@ -47,16 +50,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(intent)
         }
         if (item.itemId == R.id.nav_item_two){
+            val intent: Intent = Intent(this,RequestsActivity::class.java)
+            startActivity(intent)
+        }
+        if (item.itemId == R.id.nav_item_three){
             val intent: Intent = Intent(this,PetSittersList::class.java)
             startActivity(intent)
         }
-
-        if (item.itemId == R.id.nav_item_three){
+        if (item.itemId == R.id.nav_item_four){
             val intent: Intent = Intent(this,PetListActivity::class.java)
             startActivity(intent)
         }
-
-        if (item.itemId == R.id.nav_item_four){
+        if (item.itemId == R.id.nav_item_five){
             val intent: Intent = Intent(this,ProfileActivity::class.java)
             startActivity(intent)
         }
@@ -87,4 +92,3 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 }
-

@@ -21,7 +21,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
 import android.Manifest
+import android.location.Address
 import android.location.Location
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.gson.Gson
 import kotlinx.coroutines.*
 import org.json.JSONObject
@@ -33,12 +35,28 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
 
+    private lateinit var address: String
+    private lateinit var name: String
+
+    lateinit var handler: DBHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
+        handler = DBHelper(this)
+
+        val userLoggedInCredentials = handler.selectUserLoggedIn()
+        if (userLoggedInCredentials != null){
+            val petSitterActive = handler.selectPetSitterActive(userLoggedInCredentials.email)
+            if (petSitterActive != null) {
+                address = petSitterActive.address
+                name = petSitterActive.name
+            }
+        }
+
         //Mostrar el toolbar
-        MyToolBar().show(this,"Location",true,true)
+        MyToolBar().show(this,"${name} location",true,true)
 
         // Obtain the MapView and call its onCreate() method
         mapView = findViewById(R.id.map_view)
@@ -59,21 +77,24 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 REQUEST_LOCATION_PERMISSION)
         }
 
+
+
         // Call this function from the location callback
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 val location = locationResult.lastLocation
-                Log.d("location", location.toString())
 
                 // Use a Coroutine to get the place ID in the background
                 GlobalScope.launch {
-                    val placeId = getPlaceId(location)
-                    Log.d("placeId", placeId)
+
+                    //val placeId = getPlaceId(location)
                     //this is the place ID of my current location but sometimes when i try to get the route it fails
                     //so im gonna use for my current location (origin) the location of UA
 
+                    val petSitterPlaceId = getPlaceId(address)
+
                     // Get the route between the user's location and Aveiro
-                    val url = "https://maps.googleapis.com/maps/api/directions/json?origin=place_id:ChIJK9obTqqiIw0RhVRHSWeXC9c&destination=place_id:ChIJYyaa4skLIw0RUFmQ5L3rAAU&mode=driving&key=AIzaSyBB63oqZMQhZxzzmFRT1yQffSWkM6RDFIU"
+                    val url = "https://maps.googleapis.com/maps/api/directions/json?origin=place_id:ChIJK9obTqqiIw0RhVRHSWeXC9c&destination=place_id:${petSitterPlaceId}&mode=driving&key=AIzaSyBB63oqZMQhZxzzmFRT1yQffSWkM6RDFIU"
                     val request = JsonObjectRequest(Request.Method.GET, url, null,
                         { response ->
                             // Parse the JSON response and draw the route on the map
@@ -116,9 +137,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         // Set the map type
         googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
 
+        handler = DBHelper(this)
+
+        val userLoggedInCredentials = handler.selectUserLoggedIn()
+        if (userLoggedInCredentials != null){
+            val petSitterActive = handler.selectPetSitterActive(userLoggedInCredentials.email)
+            if (petSitterActive != null) {
+                address = petSitterActive.address
+                name = petSitterActive.name
+            }
+        }
+
         GlobalScope.launch {
             // Add a marker at a specific location
-            val url = "https://maps.googleapis.com/maps/api/geocode/json?address=Agueda&key=AIzaSyBB63oqZMQhZxzzmFRT1yQffSWkM6RDFIU"
+            val url =
+                "https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBB63oqZMQhZxzzmFRT1yQffSWkM6RDFIU"
             val response = URL(url).readText()
             val json = JSONObject(response)
             val results = json.getJSONArray("results")
@@ -127,10 +160,45 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 results.getJSONObject(0).getJSONObject("geometry").getJSONObject("location")
             val lat = location.getDouble("lat")
             val lng = location.getDouble("lng")
-            val agueda = LatLng(lat, lng)
+            val placePosition = LatLng(lat, lng)
+
+
             withContext(Dispatchers.Main) {
-                googleMap.addMarker(MarkerOptions().position(agueda).title("Agueda"))
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(agueda, 12f))
+                googleMap.addMarker(
+                    MarkerOptions().position(placePosition).title("${address} - ${name}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                )
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placePosition, 12f))
+            }
+
+            // Add a marker for the origin location
+            val url2 =
+                "https://maps.googleapis.com/maps/api/geocode/json?address=UniversidadeAveiro&key=AIzaSyBB63oqZMQhZxzzmFRT1yQffSWkM6RDFIU"
+            val response2 = URL(url2).readText()
+            val json2 = JSONObject(response2)
+            val results2 = json2.getJSONArray("results")
+            Log.d("results", results2.toString())
+            val location2 =
+                results2.getJSONObject(0).getJSONObject("geometry").getJSONObject("location")
+            val lat2 = location2.getDouble("lat")
+            val lng2 = location2.getDouble("lng")
+            val placePosition2 = LatLng(lat2, lng2)
+            withContext(Dispatchers.Main) {
+                googleMap.addMarker(
+                    MarkerOptions()
+                        .position(placePosition2)
+                        .title("Your current location")
+                        .icon(
+                            BitmapDescriptorFactory.defaultMarker(
+                                BitmapDescriptorFactory.HUE_RED
+                            )
+                        )
+                        .alpha(0.7f)
+                        .zIndex(0.5f)
+                        .draggable(false)
+                        .visible(true)
+                        .flat(false)
+                )
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placePosition2, 12f))
             }
         }
 
@@ -151,8 +219,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     // Define a function to get the place ID from the location
-    fun getPlaceId(location: Location): String {
-        val url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=AIzaSyBB63oqZMQhZxzzmFRT1yQffSWkM6RDFIU"
+    fun getPlaceId(address: String): String {
+        val url = "https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBB63oqZMQhZxzzmFRT1yQffSWkM6RDFIU"
         val response = URL(url).readText()
         val json = JSONObject(response)
         val results = json.getJSONArray("results")

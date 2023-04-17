@@ -26,15 +26,27 @@ class PetSittersActivity : AppCompatActivity() {
 
         val scheduleButton : Button = findViewById(R.id.btn_schedule)
 
+        val userLoggedInCredentials = handler.selectUserLoggedIn()
+
         scheduleButton.setOnClickListener {
-            if (handler.getPetSitterActiveCount() > 0){
-                Toast.makeText(this,"You already have a Pet Sitter service active", Toast.LENGTH_SHORT).show()
-            }
-            if (handler.getPetSitterActiveCount() <= 0) {
-                val userLoggedInCredentials = handler.selectUserLoggedIn()
-                if (userLoggedInCredentials != null){
-                    handler.insertDBpetSitterActive(petSitter.name, petSitter.address, petSitter.rating, petSitter.image, petSitter.age,petSitter.typeOfPets, petSitter.review_1, petSitter.review_2, petSitter.review_3, userLoggedInCredentials.email)
-                    val intent : Intent = Intent(this, MapActivity::class.java)
+            if (userLoggedInCredentials != null) {
+                if (handler.getPetSitterActiveCount(userLoggedInCredentials.email) > 0) {
+                    Toast.makeText(this, "You already have a Pet Sitter service active", Toast.LENGTH_SHORT).show()
+                }
+                if (handler.getPetSitterActiveCount(userLoggedInCredentials.email) <= 0) {
+                    handler.insertDBpetSitterActive(
+                        petSitter.name,
+                        petSitter.address,
+                        petSitter.rating,
+                        petSitter.image,
+                        petSitter.age,
+                        petSitter.typeOfPets,
+                        petSitter.review_1,
+                        petSitter.review_2,
+                        petSitter.review_3,
+                        userLoggedInCredentials.email
+                    )
+                    val intent: Intent = Intent(this, MapActivity::class.java)
                     startActivity(intent)
                     Toast.makeText(this, "Success Schedule", Toast.LENGTH_SHORT).show()
                 }
