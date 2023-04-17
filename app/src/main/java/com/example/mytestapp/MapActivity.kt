@@ -37,6 +37,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
+        //Mostrar el toolbar
+        MyToolBar().show(this,"Location",true,true)
+
         // Obtain the MapView and call its onCreate() method
         mapView = findViewById(R.id.map_view)
         mapView.onCreate(savedInstanceState)

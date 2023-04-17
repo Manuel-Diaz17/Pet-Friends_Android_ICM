@@ -23,10 +23,21 @@ class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version
                          "address nvarchar(50)," +
                          "phone char(10))")
 
-        Log.d("ded", "db")
 
         db?.execSQL("CREATE TABLE userLoggedIn(email nvarchar(50) primary key," +
                         "password nvarchar(50))")
+
+        db?.execSQL("CREATE TABLE petSitterActive(name nvarchar(50) primary key," +
+                        "address nvarchar(50)," +
+                        "rating REAL," +
+                        "image INTEGER," +
+                        "age INTEGER," +
+                        "typeOfPets nvarchar(50)," +
+                        "review1 nvarchar(50)," +
+                        "review2 nvarchar(50)," +
+                        "review3 nvarchar(50)," +
+                        "email nvarchar(50)," +
+                        "FOREIGN KEY(email) REFERENCES userLoggedIn(email))")
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -56,6 +67,35 @@ class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version
 
         db.insert("userLoggedIn", null, values)
         db.close()
+    }
+
+    fun insertDBpetSitterActive(name:String,address:String,rating:Float,image:Int,age:Int,typeOfPets:String, review1:String, review2:String, review3:String, email: String){
+        val db: SQLiteDatabase = writableDatabase
+        val values: ContentValues = ContentValues()
+
+        values.put("name",name)
+        values.put("address",address)
+        values.put("rating",rating)
+        values.put("image",image)
+        values.put("age",age)
+        values.put("typeOfPets",typeOfPets)
+        values.put("review1",review1)
+        values.put("review2",review2)
+        values.put("review3",review3)
+        values.put("email", email)
+
+        db.insert("petSitterActive",null,values)
+        db.close()
+    }
+
+    fun getPetSitterActiveCount(): Int {
+        val db: SQLiteDatabase = writableDatabase
+        val query = "SELECT COUNT(*) FROM petSitterActive"
+        val cursor = db.rawQuery(query, null)
+        cursor.moveToFirst()
+        val count = cursor.getInt(0)
+        cursor.close()
+        return count
     }
 
     fun getUserLoggedInCount(): Int {
