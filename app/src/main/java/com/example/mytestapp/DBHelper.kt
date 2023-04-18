@@ -45,6 +45,7 @@ class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version
                         "FOREIGN KEY(email) REFERENCES userLoggedIn(email))")
 
         db?.execSQL("CREATE TABLE pets(pet blob," +
+                        "id nvarchar(50)," +
                         "email nvarchar(50) references users(email))")
         Log.d("ded", "db")
     }
@@ -230,43 +231,58 @@ class DBHelper(context: Context):SQLiteOpenHelper(context,dbname,factory,version
 
     }
 
-    fun insertPetData(email: String, pet: Pet){
+    fun insertPetData(email: String, pet: Pet) {
         val db: SQLiteDatabase = writableDatabase
         val values: ContentValues = ContentValues()
 
-        val serializedPet = ByteArrayOutputStream().also { stream ->
-            ObjectOutputStream(stream).use { it.writeObject(pet) }
-        }.toByteArray()
+        // Serialize the pet object into a byte array
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        val objectOutputStream = ObjectOutputStream(byteArrayOutputStream)
+        objectOutputStream.writeObject(pet)
+        objectOutputStream.flush()
+        val serializedPet = byteArrayOutputStream.toByteArray()
 
-        values.put("email",email)
-        values.put("pet",serializedPet)
+        // Add the email and serialized pet to the ContentValues object
+        values.put("email", email)
+        values.put("pet", serializedPet)
+        values.put("id",pet.id)
 
+        // Insert the row into the database
         db.insert("pets", null, values)
+
+        // Close the database connection
         db.close()
     }
 
     fun deletePet(pet: Pet): Boolean {
-        val db = writableDatabase
-        if(db.delete("pets","pet ='${serializePet(pet)}'",null) == 0)
-            return false
-        return true
-
-    }
-    fun retrievePetData(email: String): List<Pet>{
         val db: SQLiteDatabase = writableDatabase
-        val query = "SELECT pet FROM pets where email ='${email}'"
-        val petList = mutableListOf<Pet>()
 
-        val cursor = db.rawQuery(query, null)
+        if(db.delete("pets","id='${pet.id}'",null) == 0) {
+            Log.d("DELETE_PET", "Failed to delete pet")
+            return false
+        }
+        Log.d("DELETE_PET", "Pet deleted successfully")
+        return true
+    }
+
+    fun retrievePetData(email: String): ArrayList<Pet>{
+        val pets = ArrayList<Pet>()
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM pets WHERE email='$email'", null)
+
         if (cursor.moveToFirst()) {
             do {
-                val petBlob = cursor.getBlob(0)
-                val pet = deserializePet(petBlob)
-                petList.add(pet)
+                val idx = cursor.getColumnIndex("pet")
+                val serializedPet = cursor.getBlob(idx)
+                val pet = ObjectInputStream(ByteArrayInputStream(serializedPet)).use { it.readObject() } as Pet
+                pets.add(pet)
             } while (cursor.moveToNext())
         }
+
         cursor.close()
-        return petList
+        db.close()
+
+        return pets
     }
 
     private fun serializePet(pet: Pet): ByteArray {

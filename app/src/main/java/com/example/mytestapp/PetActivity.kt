@@ -37,10 +37,13 @@ class PetActivity : AppCompatActivity() {
 
 
         DeletePet.setOnClickListener {
-                if(handler.deletePet(pet))
-                    Toast.makeText(this,"Pet deleted successfully", Toast.LENGTH_SHORT).show()
-                else
-                    Toast.makeText(this,"Error: Try again", Toast.LENGTH_SHORT).show()
+            if (handler.deletePet(pet)) {
+                Toast.makeText(this,"Pet deleted successfully", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, PetListActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this,"Error: Try again", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

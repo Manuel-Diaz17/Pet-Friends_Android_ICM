@@ -78,7 +78,9 @@ class PetListActivity : AppCompatActivity(), RecyclerViewInterface {
         when (item.itemId) {
             android.R.id.home -> {
                 // Do something when the up button is clicked
-                onBackPressed() // For example, go back to the previous activity
+                //onBackPressed() // For example, go back to the previous activity
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

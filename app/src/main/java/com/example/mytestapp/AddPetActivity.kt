@@ -4,27 +4,17 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.constraintlayout.motion.widget.TransitionBuilder.validate
-import androidx.core.content.FileProvider
-import kotlinx.android.synthetic.main.activity_add_pet.*
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_profile.*
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.io.ObjectOutputStream
+import java.util.*
 
 class AddPetActivity : AppCompatActivity() {
     //Call to DB
@@ -33,8 +23,7 @@ class AddPetActivity : AppCompatActivity() {
     private lateinit var editTextSpecies: EditText
     private lateinit var editTextAge: EditText
     private lateinit var buttonAddPet: Button
-    private lateinit var uri: Uri
-    
+    private lateinit var photoUri: Uri
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_pet)
@@ -49,6 +38,7 @@ class AddPetActivity : AppCompatActivity() {
 
 
         buttonAddPet.setOnClickListener {
+            val id = UUID.randomUUID().toString()
             val name = editTextName.text.toString()
             val species = editTextSpecies.text.toString()
             val age = editTextAge.text.toString().toInt()
@@ -57,7 +47,8 @@ class AddPetActivity : AppCompatActivity() {
 
             val filePath = savePhotoToFile(foto)
 
-            val newpet = Pet(name, species, age, filePath)
+
+            val newpet = Pet(id, name, species, age, filePath)
             if (userLoggedInCredentials != null) {
                 val user = handler.selectUserData(userLoggedInCredentials.email, userLoggedInCredentials.password)
                 if (user != null) {
@@ -108,7 +99,56 @@ class AddPetActivity : AppCompatActivity() {
 
 
 
+
+
     }
+/*
+    val REQUEST_IMAGE_CAPTURE = 1
+
+    val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) {
+            // The photo was taken successfully
+            foto =
+            // Do something with the photo here
+        } else {
+            // The photo was not taken
+        }
+    }
+
+    val cameraIntent = takePicture.createIntent(context)
+    startActivityForResult(cameraIntent, REQUEST_CODE_CAMERA)
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia, REQUEST_IMAGE_CAPTURE)
+        } catch (e: ActivityNotFoundException) {
+            // display error state to the user
+        }
+    }
+    private fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val photoFile = createImageFile()
+        photoUri = FileProvider.getUriForFile(this, "${BuildConfig.APPLICATION_ID}.fileprovider", photoFile)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+        registerForActivityResult()
+    }
+
+    private fun createImageFile(): File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val fileName = "JPEG_${timeStamp}_"
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(fileName, ".jpg", storageDir)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            // Photo is saved to the specified Uri
+            val imageBitmap = BitmapFactory.decodeFile(photoUri.path)
+            imageView.setImageBitmap(imageBitmap)
+        }
+    }*/
 
     //Only show button when text is filled
     private val textWatcher = object : TextWatcher {
