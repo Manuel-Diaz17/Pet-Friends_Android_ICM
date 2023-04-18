@@ -23,6 +23,7 @@ import com.google.maps.android.PolyUtil
 import android.Manifest
 import android.location.Address
 import android.location.Location
+import android.view.MenuItem
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.gson.Gson
 import kotlinx.coroutines.*
@@ -225,6 +226,18 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         val json = JSONObject(response)
         val results = json.getJSONArray("results")
         return results.getJSONObject(0).getString("place_id")
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        when (item.itemId) {
+            android.R.id.home -> {
+                // Do something when the up button is clicked
+                onBackPressed() // For example, go back to the previous activity
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
     companion object {

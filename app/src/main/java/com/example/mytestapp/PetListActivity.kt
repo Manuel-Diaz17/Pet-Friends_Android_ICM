@@ -5,11 +5,11 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_pet_list.*
@@ -18,8 +18,9 @@ import kotlinx.android.synthetic.main.pet_details.view.*
 import kotlinx.android.synthetic.main.pet_sitters_details.view.txt_name
 import java.io.File
 
-class PetListActivity : AppCompatActivity(), RecyclerViewInterface {
 
+class PetListActivity : AppCompatActivity(), RecyclerViewInterface {
+    lateinit var userPetList : List<Pet>
     lateinit var handler: DBHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +29,12 @@ class PetListActivity : AppCompatActivity(), RecyclerViewInterface {
         //Mostrar el toolbar
         MyToolBar().show(this,"Your Pets",true,true)
 
+
         handler = DBHelper(this)
         val userLoggedInCredentials = handler.selectUserLoggedIn()
-        val userPetList = handler.retrievePetData("lol")
+        if (userLoggedInCredentials != null) {
+            userPetList = handler.retrievePetData(userLoggedInCredentials.email)
+        }
 
         val adapter = PetAdapter(this,userPetList,this)
         my_listPets.layoutManager = LinearLayoutManager(this)
@@ -40,7 +44,13 @@ class PetListActivity : AppCompatActivity(), RecyclerViewInterface {
 
 
         if(userPetList.isEmpty()) {
-            setContentView(R.layout.fragment_no_pet)
+            //setContentView(R.layout.fragment_no_pet)
+            val inflater = LayoutInflater.from(this)
+            val view = inflater.inflate(R.layout.fragment_no_pet, null)
+            val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+            frameLayout.addView(view, params)
+            addPetList.visibility = View.GONE
+
             val noPetButton: Button = findViewById(R.id.addPet)
             noPetButton.setOnClickListener {
                 val intent = Intent(this, AddPetActivity::class.java)
@@ -61,6 +71,18 @@ class PetListActivity : AppCompatActivity(), RecyclerViewInterface {
         val intent = Intent(this, PetActivity::class.java)
         intent.putExtra("pet", pet)
         startActivity(intent)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        when (item.itemId) {
+            android.R.id.home -> {
+                // Do something when the up button is clicked
+                onBackPressed() // For example, go back to the previous activity
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 }
 

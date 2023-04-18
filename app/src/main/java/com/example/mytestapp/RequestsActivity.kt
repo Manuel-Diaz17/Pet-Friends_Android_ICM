@@ -3,6 +3,7 @@ package com.example.mytestapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -66,6 +67,18 @@ class RequestsActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        when (item.itemId) {
+            android.R.id.home -> {
+                // Do something when the up button is clicked
+                onBackPressed() // For example, go back to the previous activity
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
 }

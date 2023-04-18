@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_pet.*
@@ -40,6 +41,18 @@ class PetActivity : AppCompatActivity() {
                     Toast.makeText(this,"Pet deleted successfully", Toast.LENGTH_SHORT).show()
                 else
                     Toast.makeText(this,"Error: Try again", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        when (item.itemId) {
+            android.R.id.home -> {
+                // Do something when the up button is clicked
+                onBackPressed() // For example, go back to the previous activity
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
     }
 
