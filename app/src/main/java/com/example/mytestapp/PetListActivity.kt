@@ -47,11 +47,12 @@ class PetListActivity : AppCompatActivity(), RecyclerViewInterface {
                 startActivity(intent)
             }
         }
-
-        val addNewPet : Button = findViewById(R.id.addPetList)
-        addNewPet.setOnClickListener {
-            val intent = Intent(this, AddPetActivity::class.java)
-            startActivity(intent)
+        else{
+            val addNewPet : Button = findViewById(R.id.addPetList)
+            addNewPet.setOnClickListener {
+                val intent = Intent(this, AddPetActivity::class.java)
+                startActivity(intent)
+            }
         }
 
     }
