@@ -6,25 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".AddPetActivity">
 
+
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="@+id/guideline3">
 
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="@string/name"
-            android:inputType="text"/>
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/editTextSpecies"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="@string/species"
-            android:inputType="text"/>
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/editTextAge"
@@ -43,5 +46,67 @@
             android:text="@string/add_pet" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/addphoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/add_photo"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_pet_prof" />
+
+    <Button
+        android:id="@+id/camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/from_camera"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/addphoto"
+        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_pet_prof" />
+
+    <Button
+        android:id="@+id/gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/from_gallery"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.43"
+        app:layout_constraintStart_toStartOf="@+id/addphoto"
+        app:layout_constraintTop_toBottomOf="@+id/img_pet_prof" />
+
+    <ImageView
+        android:id="@+id/img_pet_prof"
+        android:layout_width="187dp"
+        android:layout_height="181dp"
+
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:srcCompat="@drawable/pets" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="397dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="70dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

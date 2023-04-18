@@ -10,4 +10,7 @@
     <string name="species">Species</string>
     <string name="age">Age</string>
     <string name="delete">Delete</string>
+    <string name="add_photo">add photo</string>
+    <string name="from_camera">Camera</string>
+    <string name="from_gallery">Gallery</string>
 </resources>
