@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
     }
     private fun validateEmail():Boolean{
         val email = txf_login_email.editText?.text.toString()
-        /*return if(email.isEmpty()){
+        return if(email.isEmpty()){
             txf_login_email.error = "Field can not be empty"
             false
         }else if(!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()){
@@ -71,21 +71,20 @@ class LoginActivity : AppCompatActivity() {
         }else{
             txf_login_email.error = null
             true
-        }*/
+        }
         return true
     }
 
     private fun validatePassword():Boolean{
         val password = txf_login_password.editText?.text.toString()
 
-        /*return if(password.isEmpty()){
+        return if(password.isEmpty()){
             txf_login_password.error = "Field can not be empty"
             false
         }else{
             txf_login_password.error = null
             true
-        }*/
-        return true
+        }
     }
 
 }

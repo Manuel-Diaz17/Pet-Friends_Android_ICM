@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import androidx.constraintlayout.motion.widget.TransitionBuilder.validate
 import androidx.core.util.PatternsCompat
 import com.example.mytestapp.databinding.ActivitySignUpBinding
 import com.google.android.material.textfield.TextInputLayout
@@ -27,8 +28,10 @@ class SignUpActivity : AppCompatActivity() {
         val btnSignUp: Button = findViewById(R.id.btn_signup)
         btnSignUp.setOnClickListener {
             validateChk()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            if (validateChk()) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
 
 
@@ -38,15 +41,14 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateChk():Boolean{
         if(cb_terms.isChecked){
-            validate()
-            return true
+            return validate()
         }else{
             Toast.makeText(this,"Accept the privacy permissions.",Toast.LENGTH_SHORT).show()
             return false
         }
     }
 
-    private fun validate(){
+    private fun validate(): Boolean{
         //TextInputs
         val name = txf_name
         val lastname =  txf_lastname
@@ -56,8 +58,9 @@ class SignUpActivity : AppCompatActivity() {
 
         if(false in result){
             Toast.makeText(this,"Failed to register User",Toast.LENGTH_SHORT).show()
-            return
+            return false
         }
+        else {
 
             handler.insertDB(
                 txf_email.editText?.text.toString(),
@@ -65,26 +68,28 @@ class SignUpActivity : AppCompatActivity() {
                 txf_name.editText?.text.toString(),
                 txf_lastname.editText?.text.toString(),
                 txf_address.editText?.text.toString(),
-                txf_phone.editText?.text.toString())
+                txf_phone.editText?.text.toString()
+            )
 
-            Toast.makeText(this,"User Sign Up Success",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "User Sign Up Success", Toast.LENGTH_SHORT).show()
 
+            return true
+        }
 
     }
 
     private fun validateEmail():Boolean{
         val email = txf_email.editText?.text.toString()
-        /*return if(email.isEmpty()){
+        return if(email.isEmpty()){
             txf_email.error = "Field can not be empty"
             false
         }else if(!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()){
             txf_email.error = "Please enter a valid email"
             false
-        }else{
+        }else {
             txf_email.error = null
             true
-        }*/
-        return true
+        }
     }
     private fun validateThing(data:TextInputLayout):Boolean{
         val thing = data.editText?.text.toString()
@@ -99,26 +104,18 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validatePassword():Boolean{
         val password = txf_password.editText?.text.toString()
-        /*val passwordRegex = Pattern.compile(
-            "^" +
-                    "(?=.*[0-9])" +
-                    "(?=.*[a-z])" +
-                    "(?=.*[A-Z])" +
-                    "(?=.*[@#$%^&+=])" +
-                    "(?=\\S+$)" +
-                    ".{4,}" +
-                    "$"
+        val passwordRegex = Pattern.compile(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,}$"
         )
         return if(password.isEmpty()){
             txf_password.error = "Field can not be empty"
             false
         }else if(!passwordRegex.matcher(password).matches()){
-            txf_password.error = "Password is too weak"
+            txf_password.error = "Password is too weak. Use at least a number, a capital letter and a symbol!"
             false
         }else{
             txf_password.error = null
             true
-        }*/
-        return true
+        }
     }
 }
