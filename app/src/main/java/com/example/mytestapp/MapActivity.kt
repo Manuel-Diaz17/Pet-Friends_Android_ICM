@@ -121,11 +121,15 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.d("MapActivity", "onRequestPermissionsResult() called")
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("MapActivity", "Location permission granted")
                 // Permission granted, initialize fusedLocationClient
+                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
             } else {
+                Log.d("MapActivity", "Location permission denied")
                 // Permission denied, handle accordingly (e.g. show an error message)
                 Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
             }

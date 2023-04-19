@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.startActivity
@@ -34,10 +37,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.addDrawerListener(toggle)
 
-        handler = DBHelper(this)
 
 
         val navigationView: NavigationView = findViewById(R.id.nav_view)
+
+        val headerView: View = navigationView.getHeaderView(0)
+        val textView: TextView = headerView.findViewById(R.id.nav_header_textView)
+        val userLoggedInCredentials = handler.selectUserLoggedIn()
+        if (userLoggedInCredentials != null) {
+            val user = handler.selectUserData(userLoggedInCredentials.email, userLoggedInCredentials.password)
+            if (user != null) {
+                textView.text = user.name + " " + user.lastname
+
+            }
+        }
 
         navigationView.setNavigationItemSelectedListener(this)
 
@@ -45,6 +58,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
         if (item.itemId == R.id.nav_item_one ){
             val intent: Intent = Intent(this,StartupActivity::class.java)
             startActivity(intent)
@@ -66,7 +80,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(intent)
         }
 
-
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
@@ -87,6 +100,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         return super.onOptionsItemSelected(item)
     }
+
 
     override fun onBackPressed() {
 
