@@ -6,7 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".AddPetActivity">
 
-
+    <include
+        android:id="@+id/include"
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"

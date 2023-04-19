@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -44,6 +45,9 @@ class AddPetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_pet)
+
+        //Mostrar el toolbar
+        MyToolBar().show(this,"Add pet",true,true)
 
         editTextName = findViewById(R.id.editTextName)
         editTextSpecies = findViewById(R.id.editTextSpecies)
@@ -149,6 +153,18 @@ class AddPetActivity : AppCompatActivity() {
             pickImage.launch("image/*")
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        when (item.itemId) {
+            android.R.id.home -> {
+                // Do something when the up button is clicked
+                onBackPressed() // For example, go back to the previous activity
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
 
